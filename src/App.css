@@ -1,0 +1,26 @@
+body {
+  background-image: url("https://cdn.vox-cdn.com/thumbor/ZFXJdZ1p6OHIGe_ezdrJwDyLiqQ=/0x27:1261x868/920x613/filters:focal(0x27:1261x868):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/32775937/Screen_Shot_2014-05-05_at_3.24.36_PM.0.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.pageTitle {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+label {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+button {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.loser {
+  color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
