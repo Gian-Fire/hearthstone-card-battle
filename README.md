@@ -3,4 +3,4 @@ Welcome to Hearthstone card battle simulator. This app is built with React and t
 
 ## Check it out!
 
-You can find my app here: [Heathstone Card Battle Simulator](https://gd-react200-weather-app.herokuapp.com/ "Heathstone Card Battle Simulator")
+You can find my app here: [Heathstone Card Battle Simulator](https://gd-hearthstone-brawl.herokuapp.com/ "Heathstone Card Battle Simulator")
