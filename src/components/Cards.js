@@ -66,8 +66,7 @@ class Cards extends React.Component {
   }
   
   render() {
-    let winner = this.state.winner;
-    let loser = this.state.loser;
+    const { winner, loser, leftCard, rightCard } = this.state;
 
     return (
       <div className=" row">
@@ -90,7 +89,7 @@ class Cards extends React.Component {
             </select>
           </div>
           <div className='row'>
-            { winner !== loser
+            { leftCard === loser
               ? <Loser 
                 card={this.state.leftCard}
                 cardData={this.props.cardData}
@@ -127,7 +126,7 @@ class Cards extends React.Component {
             </select>
           </div>
           <div className='row'>
-          { loser !== loser
+          {  rightCard === loser
             ? <Loser 
                 card={this.state.rightCard}
                 cardData={this.props.cardData}
@@ -146,9 +145,10 @@ class Cards extends React.Component {
           </div>
         </div>
 
-        <div className='row'>
+        <div className='row col-md-8 mx-auto'>
           <button
-            className="button btn-block btn-danger"
+            type='button'
+            className="btn btn-danger btn-block"
             onClick={ () => this.handleBrawl(this.state.selectedCards, )}
           >
             FIGHT!!!

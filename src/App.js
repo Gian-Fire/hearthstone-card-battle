@@ -14,17 +14,17 @@ export default class App extends React.Component {
     fetch('/api/cards')
       .then(res => res.json())
       .then(result => result.filter(minions => minions.type === 'Minion'))
-      .then(cardInfos => this.setState({cardData: cardInfos,}));
+      .then(cardInfos => this.setState({cardData: cardInfos}));
   }
 
   render() {
     return (
       <div className="container">
-        <h3 
+        <h1 
           className='pageTitle'
         >
           Hearthstone Card Brawl
-        </h3>
+        </h1>
         <Cards 
           cardData={this.state.cardData}
         />
