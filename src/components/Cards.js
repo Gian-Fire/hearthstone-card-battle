@@ -2,7 +2,7 @@ import React from "react";
 import CardArt from './CardArt';
 import Loser from './Loser';
 
-class Cards extends React.Component {
+export default class Cards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +46,6 @@ class Cards extends React.Component {
       loser: loser,
       draw: isDraw
     })
-    
 
     if (leftHealth && rightHealth > 0) {
       isDraw = true;
@@ -66,17 +65,28 @@ class Cards extends React.Component {
   }
   
   render() {
-    const { winner, loser, leftCard, rightCard } = this.state;
+    const { winner, loser, draw, leftCard, rightCard } = this.state;
 
     return (
-      <div className=" row">
+      <div className="row">
 
         <div className="col-md-6">
-          <div className='row'>
+          <div 
+            className='row'
+            style={{
+              marginLeft: 150 
+            }}
+          >
             <label>Choose Your Minion:</label>
           </div>
-          <div className='row'>
+          <div 
+            className='row'
+            style={{
+              marginLeft: 150 
+            }}
+          >
             <select 
+              id='leftCard'
               name="leftCard" 
               onChange={this.handleChange}
             >
@@ -109,11 +119,22 @@ class Cards extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <div className='row'>
+          <div 
+            className='row'
+            style={{
+              marginLeft: 150 
+            }}
+          >
             <label>Choose Your Minion:</label>
           </div>
-          <div className='row'>
+          <div 
+            className='row'
+            style={{
+              marginLeft: 150 
+            }}
+          >
             <select 
+              id='rightCard'
               name="rightCard" 
               onChange={this.handleChange}
               >
@@ -146,18 +167,28 @@ class Cards extends React.Component {
         </div>
 
         <div className='row col-md-8 mx-auto'>
-          <button
-            type='button'
-            className="btn btn-danger btn-block"
-            onClick={ () => this.handleBrawl(this.state.selectedCards, )}
-          >
-            FIGHT!!!
-          </button>
+          {
+            winner || loser || draw === true
+            ?
+              <button
+                type='button'
+                className="btn btn-primary btn-block"
+                onClick={ () => location.reload()}
+              >
+                Reset
+              </button>
+            :
+              <button
+                type='button'
+                className="btn btn-danger btn-block"
+                onClick={ () => this.handleBrawl(this.state.selectedCards)}
+              >
+                FIGHT!!!
+              </button>
+          }
         </div>
 
       </div>
     );
   }
 }
-
-export default Cards;

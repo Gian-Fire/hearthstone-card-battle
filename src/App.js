@@ -11,7 +11,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/cards')
+    fetch('/cards')
       .then(res => res.json())
       .then(result => result.filter(minions => minions.type === 'Minion'))
       .then(cardInfos => this.setState({cardData: cardInfos}));
