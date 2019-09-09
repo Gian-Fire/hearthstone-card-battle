@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Loser extends React.Component {
+export default class Winner extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -12,16 +12,13 @@ export default class Loser extends React.Component {
       <div className="form-group mx-auto">
           <img
             className="minion "
-            style={{
-              filter: 'grayscale(100)'
-            }}
             alt="Selected Minion"
             src={`http://media.services.zam.com/v1/media/byName/hs/cards/enus/animated/${card}_premium.gif`}
           />
           <h1
-            className="loser"
+            className="winner"
           >
-            LOSER!
+            Winner!
           </h1>
       </div>
     );

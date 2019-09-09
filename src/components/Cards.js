@@ -1,6 +1,8 @@
 import React from "react";
 import CardArt from './CardArt';
 import Loser from './Loser';
+import Draw from './Draw';
+import Winner from './Winner';
 
 export default class Cards extends React.Component {
   constructor(props) {
@@ -79,6 +81,8 @@ export default class Cards extends React.Component {
       leftCardAttributes 
     } = this.state;
 
+    const { cardData } = this.props;
+
     return (
       <div className="row">
 
@@ -104,7 +108,7 @@ export default class Cards extends React.Component {
               required
             >
               <option value='' disabled selected>Select</option>
-              {this.props.cardData.map(card => (
+              {cardData.map(card => (
                 <option key={card.cardId} value={card.cardId} >
                   {card.name}
                 </option>
@@ -112,21 +116,22 @@ export default class Cards extends React.Component {
             </select>
           </div>
           <div className='row'>
-            { leftCard === loser
-              ? <Loser 
-                card={this.state.leftCard}
-                cardData={this.props.cardData}
-                handleCardProperties={this.handleCardProperties}
-                loser={this.state.loser}
-              />
-              : <CardArt
-                  card={this.state.leftCard}
-                  cardData={this.props.cardData}
-                  handleCardProperties={this.handleCardProperties}
-                  winner={this.state.winner}
-                  loser={this.state.loser}
-                  draw={this.state.draw}
-                />
+            { draw || leftCard === loser
+              ? draw === true
+                ? <Draw
+                    card={leftCard}
+                  />
+                :
+                  <Loser 
+                    card={leftCard}
+                  /> 
+              : winner !== leftCard
+                ? <CardArt
+                    card={leftCard}
+                  />
+                : <Winner
+                    card={leftCard}
+                  />
             }
           </div>
         </div>
@@ -153,7 +158,7 @@ export default class Cards extends React.Component {
               required
               >
               <option value='' disabled selected>Select</option>
-              {this.props.cardData.map(card => (
+              {cardData.map(card => (
                 <option key={card.cardId} value={card.cardId}>
                   {card.name}
                 </option>
@@ -161,22 +166,23 @@ export default class Cards extends React.Component {
             </select>
           </div>
           <div className='row'>
-          {  rightCard === loser
-            ? <Loser 
-                card={this.state.rightCard}
-                cardData={this.props.cardData}
-                handleCardProperties={this.handleCardProperties}
-                loser={this.state.loser}
-              />
-            : <CardArt
-                card={this.state.rightCard}
-                cardData={this.props.cardData}
-                handleCardProperties={this.handleCardProperties}
-                winner={this.state.winner}
-                loser={this.state.loser}
-                draw={this.state.draw}
-              />
-          }
+          { (draw || rightCard === loser)
+              ? draw === true
+                ? <Draw
+                    card={rightCard}
+                  />
+                :
+                  <Loser 
+                    card={rightCard}
+                  /> 
+              : winner !== rightCard
+                ? <CardArt
+                    card={rightCard}
+                  />
+                : <Winner
+                    card={rightCard}
+                  />
+            }
           </div>
         </div>
 
@@ -197,7 +203,7 @@ export default class Cards extends React.Component {
                 <button
                   type='button'
                   className="btn btn-danger btn-block"
-                  onClick={ () => this.handleBrawl(this.state.leftCardAttributes, this.state.rightCardAttributes)}
+                  onClick={ () => this.handleBrawl(leftCardAttributes, rightCardAttributes)}
                 >
                   FIGHT!!!
                 </button>
@@ -212,7 +218,7 @@ export default class Cards extends React.Component {
                   <button
                     type='button'
                     className="btn btn-success btn-block"
-                    onClick={ () => this.handleCardProperties(this.state.leftCard, this.state.rightCard)}
+                    onClick={ () => this.handleCardProperties(leftCard, rightCard)}
                   >
                     CONFIRM!!!
                   </button>
