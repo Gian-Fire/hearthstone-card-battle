@@ -9,6 +9,8 @@ export default class Cards extends React.Component {
       selectedCards: [],
       leftCard: '',
       rightCard: '',
+      leftCardAttributes: null,
+      rightCardAttributes: null,
       winner: false,
       loser: false,
       draw: false
@@ -20,44 +22,46 @@ export default class Cards extends React.Component {
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-}
-
-  handleCardProperties(id) {
-    const properties = this.props.cardData;
-    let chosenCard;
-    for (let i = 0; i < properties.length; i++) {
-      if (properties[i].cardId === id) {
-        chosenCard = properties[i];
-      }
-    }
-    this.state.selectedCards.push(chosenCard);
-    this.setState({ selectedCards: this.state.selectedCards});
   }
 
-  handleBrawl(brawlers) {
-    let leftHealth = brawlers[0].health - brawlers[1].attack;
-    let rightHealth = brawlers[1].health - brawlers[0].attack;
+  handleCardProperties(leftCard, rightCard) {
+    const properties = this.props.cardData;
+    let leftAttributes;
+    let rightAttributes;
+
+    properties.map( (attributes) => {
+      if (attributes.cardId === leftCard) {
+        leftAttributes = attributes;
+      }
+      if (attributes.cardId === rightCard) {
+        rightAttributes = attributes
+      }
+    })
+
+    this.setState({ 
+      leftCardAttributes: leftAttributes,
+      rightCardAttributes: rightAttributes
+    });
+  }
+
+  handleBrawl(leftCard, rightCard) {
+    let leftHealth = leftCard.health - rightCard.attack;
+    let rightHealth = rightCard.health - leftCard.attack;
     let winner;
     let loser;
     let isDraw;
 
-    this.setState({
-      winner: winner,
-      loser: loser,
-      draw: isDraw
-    })
-
-    if (leftHealth && rightHealth > 0) {
-      isDraw = true;
-      this.setState({ draw: isDraw})
-    } else if (leftHealth > 0 ) { 
-      winner = brawlers[0].cardId;
-      loser = brawlers[1].cardId;
+    if (leftHealth > 0 ) { 
+      winner = leftCard.cardId;
+      loser = rightCard.cardId;
       this.setState({winner: winner, loser: loser})
     } else if (rightHealth > 0) {
-      winner = brawlers[1].cardId;
-      loser = brawlers[0].cardId;
+      winner = rightCard.cardId;
+      loser = leftCard.cardId;
       this.setState({winner: winner, loser: loser})
+    } else if (leftHealth && rightHealth > 0) {
+      isDraw = true;
+      this.setState({ draw: isDraw})
     } else {
       isDraw = true;
       this.setState({ draw: isDraw})
@@ -65,7 +69,15 @@ export default class Cards extends React.Component {
   }
   
   render() {
-    const { winner, loser, draw, leftCard, rightCard } = this.state;
+    const { 
+      winner, 
+      loser, 
+      draw, 
+      leftCard, 
+      rightCard, 
+      rightCardAttributes, 
+      leftCardAttributes 
+    } = this.state;
 
     return (
       <div className="row">
@@ -77,7 +89,7 @@ export default class Cards extends React.Component {
               marginLeft: 150 
             }}
           >
-            <label>Choose Your Minion:</label>
+            <label>Player One, Choose Your Minion:</label>
           </div>
           <div 
             className='row'
@@ -89,10 +101,11 @@ export default class Cards extends React.Component {
               id='leftCard'
               name="leftCard" 
               onChange={this.handleChange}
+              required
             >
-              <option>Select</option>
+              <option value='' disabled selected>Select</option>
               {this.props.cardData.map(card => (
-                <option key={card.cardId} value={card.cardId}>
+                <option key={card.cardId} value={card.cardId} >
                   {card.name}
                 </option>
               ))}
@@ -125,7 +138,7 @@ export default class Cards extends React.Component {
               marginLeft: 150 
             }}
           >
-            <label>Choose Your Minion:</label>
+            <label>Player Two, Choose Your Minion:</label>
           </div>
           <div 
             className='row'
@@ -137,8 +150,9 @@ export default class Cards extends React.Component {
               id='rightCard'
               name="rightCard" 
               onChange={this.handleChange}
+              required
               >
-              <option>Select</option>
+              <option value='' disabled selected>Select</option>
               {this.props.cardData.map(card => (
                 <option key={card.cardId} value={card.cardId}>
                   {card.name}
@@ -178,13 +192,31 @@ export default class Cards extends React.Component {
                 Reset
               </button>
             :
-              <button
-                type='button'
-                className="btn btn-danger btn-block"
-                onClick={ () => this.handleBrawl(this.state.selectedCards)}
-              >
-                FIGHT!!!
-              </button>
+              rightCardAttributes && leftCardAttributes !== null || undefined
+              ?
+                <button
+                  type='button'
+                  className="btn btn-danger btn-block"
+                  onClick={ () => this.handleBrawl(this.state.leftCardAttributes, this.state.rightCardAttributes)}
+                >
+                  FIGHT!!!
+                </button>
+              :
+                <div className='col-md-12'>
+                  <h3
+                    id='brawlConfirm'
+                    className='text-center'
+                  >
+                    Please select and confirm your minions.
+                  </h3>
+                  <button
+                    type='button'
+                    className="btn btn-success btn-block"
+                    onClick={ () => this.handleCardProperties(this.state.leftCard, this.state.rightCard)}
+                  >
+                    CONFIRM!!!
+                  </button>
+                </div>
           }
         </div>
 

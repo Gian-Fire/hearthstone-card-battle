@@ -1,6 +1,6 @@
 import React from 'react';
 
-class CardArt extends React.Component {
+export default class CardArt extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,5 +30,3 @@ class CardArt extends React.Component {
     );
   }
 }
-
-export default CardArt;

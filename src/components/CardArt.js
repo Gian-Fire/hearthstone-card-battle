@@ -1,12 +1,12 @@
 import React from "react";
 
-function determinesDraw(draw) {
+const determinesDraw = (draw) => {
   if (draw) {
     return 'grayscale(100%)';
   }
 }
 
-class CardArt extends React.Component {
+export default class CardArt extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,19 +37,8 @@ class CardArt extends React.Component {
               src={`http://media.services.zam.com/v1/media/byName/hs/cards/enus/animated/${cardId}_premium.gif`}
             />
         }
-        <div className='row'>
-          <button
-            id='confirm-btn'
-            className="btn btn-block btn-success mx-auto"
-            onClick={() => this.props.handleCardProperties(cardId)}
-          >
-            Confirm!
-          </button>
-        </div>
 
       </div>
     );
   }
 }
-
-export default CardArt;
